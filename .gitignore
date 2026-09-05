@@ -1,0 +1,24 @@
+# Gradle
+.gradle/
+build/
+local.properties
+.kotlin/
+
+# IDE
+.idea/
+*.iml
+.cxx/
+
+# Signing
+*.jks
+*.keystore
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Local dev artifacts — not part of the public repo
+*.apk
+*.zip
+设备诊断-*/
+工具-*.py

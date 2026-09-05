@@ -1,0 +1,6 @@
+id=hdrfix_fp16_client_target
+name=TB710FU HDR fp16 client target
+version=1.1.0
+versionCode=2
+author=alittlelove
+description=①开机设置 debug.sf.fp16_client_target=true(修复A16 UltraHDR图片高光钳白/过曝,实机验证有效) ②预建日志文件修复 /data/system/hdrfix.log 的 EACCES(root建+chown system)。卸载模块+重启即完全回退。

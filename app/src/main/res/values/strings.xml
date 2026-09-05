@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HDR Ratio Fix</string>
+    <string name="xposed_description">Keeps writing the brightness-dependent UltraHDR hdr/sdr ratio inside system_server — restoring Android 15 semantics where the reported ratio follows the actual panel boost. Requires the companion KSU module (debug.sf.fp16_client_target). See the repository README for the full mechanism.</string>
+
+    <string name="tab_status">Status</string>
+    <string name="tab_test">HDR Test</string>
+    <string name="tab_controls">Controls</string>
+    <string name="tab_logs">Logs</string>
+    <string name="log_active_path">Active log file</string>
+    <string name="tab_about">About</string>
+
+    <string name="status_hook_active">Hook active</string>
+    <string name="status_hook_inactive">Hook not active (enable module in LSPosed and reboot)</string>
+    <string name="status_ratio">Current HDR/SDR ratio</string>
+    <string name="status_ratio_unknown">Unknown (requires root)</string>
+    <string name="status_gpu">Force GPU composition</string>
+    <string name="status_on">On</string>
+    <string name="status_off">Off</string>
+    <string name="status_root">Root access</string>
+    <string name="status_root_ok">Granted — log folder is kept under /storage/emulated/0/hdr日志/</string>
+    <string name="status_root_missing">Not granted — open SukiSU/KernelSU manager, grant this app, then reopen</string>
+    <string name="status_panel_peak">Panel peak luminance</string>
+    <string name="refresh">Refresh</string>
+
+    <string name="ctl_mode_title">Work mode</string>
+    <string name="ctl_mode_summary">Takes effect immediately, no reboot. 0 = same-source bootstrap (recommended), 1 = suppress panel HDR boost (rarely needed once the fp16 module is active).</string>
+    <string name="ctl_mode_0">0 · Same-source bootstrap</string>
+    <string name="ctl_mode_1">1 · Suppress panel boost</string>
+    <string name="ctl_mode_2">2 · v1.1.8 legacy</string>
+    <string name="status_mode">Work mode</string>
+    <string name="status_disabled">disabled</string>
+    <string name="status_reboot_hint">Module not reloaded yet — reboot</string>
+    <string name="ctl_disable_title">Disable module (kill switch)</string>
+    <string name="ctl_disable_summary">Disable the ratio bootstrap instantly (checked on every callback — no reboot). Observation hooks keep logging.</string>
+    <string name="ctl_gpu_title">Force GPU composition at boot</string>
+    <string name="ctl_gpu_summary">Sends SurfaceFlinger transaction 1008 ~15 s after boot (same as “Disable HW overlays”). Fixes DPU tone-mapping flicker on this device. Takes effect after reboot.</string>
+    <string name="ctl_log_title">Verbose log</string>
+    <string name="ctl_log_summary">Observation logs on/off. Critical diagnostics always log regardless.</string>
+    <string name="ctl_max_title">Ratio upper bound</string>
+    <string name="ctl_max_summary">Cap the reported HDR/SDR ratio. 0 = unlimited (default). Lower it if highlights clip. The effective ceiling is 4.0 (limited by the OEM curve).</string>
+    <string name="ctl_max_unlimited">Unlimited</string>
+    <string name="reset_defaults">Reset all settings to defaults</string>
+
+    <string name="ctl_theme_title">Appearance</string>
+    <string name="ctl_theme_mode">Theme mode</string>
+    <string name="ctl_theme_mode_summary">Follow system / Light / Dark.</string>
+    <string name="ctl_theme_monet">Monet dynamic color</string>
+    <string name="ctl_theme_monet_summary">Color derived from the wallpaper (Android 12+).</string>
+    <string name="theme_system">System</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="exec_ok">Applied</string>
+    <string name="exec_fail">Failed — is root (su) available?</string>
+
+    <string name="log_empty">No log yet. Enable “Log to file” and reopen an HDR image.</string>
+    <string name="log_refresh">Refresh</string>
+    <string name="log_clear">Clear</string>
+    <string name="log_copy">Copy</string>
+    <string name="log_share">Share</string>
+    <string name="log_export">Export to Download/</string>
+    <string name="exported">Exported to /sdcard/Download/hdrfix.log</string>
+    <string name="log_cleared">Log cleared</string>
+    <string name="copied">Copied to clipboard</string>
+    <string name="log_capture_logcat">Capture module diagnostics from logcat</string>
+    <string name="log_capture_empty">Nothing captured (module may not be active)</string>
+    <string name="log_repair_fail">Log file rebuild failed (root?)</string>
+    <string name="log_logcat_section">Module logcat dump</string>
+
+    <string name="test_hdr_mode">HDR window color mode</string>
+    <string name="test_hdr_mode_summary">When on, the hardware-accelerated canvas applies the gain map automatically if headroom exists.</string>
+    <string name="test_switch_image">Switch sample image</string>
+    <string name="test_open_browser">Open full HDR test in browser</string>
+    <string name="test_open_browser_summary">zyyme.com/hdr-test.html (HDR video needs Chrome; WebView cannot render HDR by platform design).</string>
+    <string name="test_open_fullscreen">Open full-screen HDR test</string>
+    <string name="test_open_fullscreen_summary">A dedicated window that only boosts the sample image — HDR mode never leaks into the rest of the app.</string>
+    <string name="test_gainmap">Gainmap decoded</string>
+    <string name="test_scan_running">Sweeping: %1$s — do not lock the screen</string>
+    <string name="test_scan_summary">Smoothly ramps 30%→60%→100%, samples the app channel and root truth at each step, writes /sdcard/Download/hdrscan.log (~30s, keep screen on, keep HDR switch ON)</string>
+    <string name="test_scan">HDR brightness sweep (one tap)</string>
+    <string name="test_types">Supported HDR types</string>
+    <string name="test_highest">Highest HDR/SDR ratio</string>
+    <string name="test_luminance">Desired max luminance</string>
+
+    <string name="about_version">Version</string>
+    <string name="about_license">License: Apache-2.0</string>
+    <string name="about_device">Target: Lenovo Tab Plus-family TB710FU (SM8650), ZUXOS 1.5.04.366 / Android 16</string>
+    <string name="about_disclaimer">Root + Xposed module. Use at your own risk. This module never writes to brightness or backlight paths.</string>
+
+    <string name="confirm_disable_message">UltraHDR image boost will stop immediately and the stock NaN behaviour returns. You can re-enable at any time without reboot.</string>
+    <string name="disable_armed_toast">Tap again to confirm disabling</string>
+
+    <string name="eula_title">User Agreement &amp; Disclaimer</string>
+    <string name="eula_scroll_hint">Please read the full agreement. The buttons unlock after you reach the bottom.</string>
+    <string name="eula_agree">Agree &amp; continue</string>
+    <string name="eula_decline">Decline</string>
+</resources>

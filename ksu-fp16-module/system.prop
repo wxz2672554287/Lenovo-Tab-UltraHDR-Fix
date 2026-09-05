@@ -1,0 +1,6 @@
+# SurfaceFlinger FlagManager prop override: unconditional, beats the
+# compiled-in aconfig value (verified by disassembly of the 366 SF binary:
+# the flag's consumer returns a constant 1.0 ratio path when false).
+# Must be set before SF starts (ksud post-fs-data) — the value is cached
+# statically at SF startup.
+debug.sf.fp16_client_target=true

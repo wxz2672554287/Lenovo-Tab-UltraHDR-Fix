@@ -1,0 +1,46 @@
+Lenovo-Tab-UltraHDR-Fix — User Agreement & Disclaimer
+
+[Preface]
+Lenovo-Tab-UltraHDR-Fix (this "Module") is an open-source project built on the
+LSPosed/Xposed framework, intended solely for learning and research. Read this
+agreement in full before use; scrolling to the bottom of this page is required
+before you can proceed.
+
+1. Risks of Root and Frameworks
+Using this Module requires an unlocked bootloader, root access (e.g. KernelSU /
+Magisk) and the LSPosed framework. These are high-risk operations that may void
+your warranty, brick the device, cause data loss, degrade stability or weaken
+security. Back up all important data first; losses from missing backups are
+borne by the user.
+
+2. Lawful Scope of Use
+This Module is intended exclusively for modifying and debugging devices that
+you lawfully own. Using it (or any technique herein) to intrude into, control
+or damage computer systems owned by others or not authorized to you may
+constitute criminal offenses (e.g. unauthorized access to / acquisition of data
+from / control of computer information systems, or providing tools specially
+designed for such intrusion — cf. Article 285 of the Criminal Law of the PRC
+and equivalent statutes elsewhere). Any use beyond "modifying your own device
+for learning purposes" is solely your responsibility.
+
+3. Modifications to the Lenovo System
+The Module only restores the intended UltraHDR image display behavior on the
+target device (Lenovo TB710FU, ZUXOS 1.5.04.366 / Android 16) and works
+around a known flicker issue in that device's DPU composition path. It does
+not circumvent paid-content protection, collect or transmit user data, or
+interfere with vendor services. It may nonetheless violate the vendor's user
+agreement or warranty terms; confirm and accept that risk yourself.
+
+4. Disclaimer
+The Module is provided free of charge, "as is", without any warranty. The
+authors and contributors are not liable for any direct or indirect loss
+(including device damage, data loss or account issues). Obtain the Module only
+from the official open-source repository; repackaged or redistributed copies
+are untrusted. The Module is permanently free and must not be sold.
+
+5. Acceptance
+Tapping "Agree & continue" means you have read, understood and accepted all
+terms above. If you disagree, tap "Decline" and uninstall and delete the
+Module immediately. Decide whether to keep the Module within 24 hours of
+download; if kept for learning and research purposes only, delete it within a
+reasonable period.

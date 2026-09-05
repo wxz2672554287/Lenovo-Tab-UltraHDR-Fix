@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HDR 比率修复</string>
+    <string name="xposed_description">在系统内持续写入随亮度动态变化的 UltraHDR hdr/sdr 比率（复刻 Android 15 语义：报告值跟随面板实际抬亮）。需配合 KSU 模块（debug.sf.fp16_client_target）使用，详细机制见仓库 README。</string>
+
+    <string name="tab_status">状态</string>
+    <string name="tab_test">HDR 测试</string>
+    <string name="tab_controls">开关</string>
+    <string name="tab_logs">日志</string>
+    <string name="log_active_path">日志文件位置</string>
+    <string name="tab_about">关于</string>
+
+    <string name="status_hook_active">钩子已生效</string>
+    <string name="status_hook_inactive">钩子未生效（请在 LSPosed 中启用模块并重启）</string>
+    <string name="status_ratio">当前 HDR/SDR 比率</string>
+    <string name="status_ratio_unknown">未知（需要 root）</string>
+    <string name="status_gpu">开机强制 GPU 合成</string>
+    <string name="status_on">开</string>
+    <string name="status_off">关</string>
+    <string name="status_root">Root 授权</string>
+    <string name="status_root_ok">已授权——日志目录保持在 /storage/emulated/0/hdr日志/</string>
+    <string name="status_root_missing">未授权——请打开 SukiSU/KernelSU 管理器给本应用授权后重进</string>
+    <string name="status_panel_peak">面板峰值亮度</string>
+    <string name="refresh">刷新</string>
+
+    <string name="ctl_mode_title">工作模式</string>
+    <string name="ctl_mode_summary">免重启，切换立即生效。0=同源引导（推荐）；1=禁用面板HDR抬升（fp16 模块生效后通常无需开启）。</string>
+    <string name="ctl_mode_0">0 · 同源引导</string>
+    <string name="ctl_mode_1">1 · 禁用面板抬升</string>
+    <string name="ctl_mode_2">2 · v1.1.8 旧行为</string>
+    <string name="status_mode">工作模式</string>
+    <string name="status_disabled">已停用</string>
+    <string name="status_reboot_hint">模块尚未重载，请重启</string>
+    <string name="ctl_disable_title">停用模块（总闸）</string>
+    <string name="ctl_disable_summary">立即停用比率引导（每次回调动态检查，免重启生效）。观察日志不受影响。</string>
+    <string name="ctl_gpu_title">开机强制 GPU 合成</string>
+    <string name="ctl_gpu_summary">开机约 15 秒后向 SurfaceFlinger 发送 1008 事务（等同“停用 HW 叠加层”），修复本机 DPU 色调映射闪屏。重启后生效。</string>
+    <string name="ctl_log_title">详细日志</string>
+    <string name="ctl_log_summary">观察类日志开关。关键诊断日志不受此开关影响，始终写入。</string>
+    <string name="ctl_max_title">比率上限</string>
+    <string name="ctl_max_summary">限制上报的 HDR/SDR 比率。0 = 不限制（默认）。高光溢出时调低。实际上限 4.0（受 OEM 曲线封顶）。</string>
+    <string name="ctl_max_unlimited">不限制</string>
+    <string name="reset_defaults">恢复全部默认</string>
+
+    <string name="ctl_theme_title">外观</string>
+    <string name="ctl_theme_mode">主题模式</string>
+    <string name="ctl_theme_mode_summary">跟随系统 / 浅色 / 深色。</string>
+    <string name="ctl_theme_monet">Monet 动态取色</string>
+    <string name="ctl_theme_monet_summary">颜色由壁纸生成（Android 12+）。</string>
+    <string name="theme_system">跟随系统</string>
+    <string name="theme_light">浅色</string>
+    <string name="theme_dark">深色</string>
+    <string name="exec_ok">已应用</string>
+    <string name="exec_fail">失败——root (su) 是否可用？</string>
+
+    <string name="log_empty">暂无日志。开启“日志落盘”后重新打开一张 HDR 图片。</string>
+    <string name="log_refresh">刷新</string>
+    <string name="log_clear">清除</string>
+    <string name="log_copy">复制</string>
+    <string name="log_share">分享</string>
+    <string name="log_export">导出到 Download/</string>
+    <string name="exported">已导出到 /sdcard/Download/hdrfix.log</string>
+    <string name="log_cleared">日志已清除</string>
+    <string name="copied">已复制到剪贴板</string>
+    <string name="log_capture_logcat">从 logcat 抓取模块诊断</string>
+    <string name="log_capture_empty">未抓到（模块可能未激活）</string>
+    <string name="log_repair_fail">日志文件重建失败（root？）</string>
+    <string name="log_logcat_section">模块 logcat 诊断</string>
+
+    <string name="test_hdr_mode">HDR 窗口色彩模式</string>
+    <string name="test_hdr_mode_summary">开启后，硬件加速画布在有余量时自动应用 gain map 提亮。</string>
+    <string name="test_switch_image">切换样图</string>
+    <string name="test_open_browser">在浏览器打开完整 HDR 测试</string>
+    <string name="test_open_browser_summary">zyyme.com/hdr-test.html（HDR 视频需 Chrome；WebView 按平台设计无法渲染 HDR）。</string>
+    <string name="test_open_fullscreen">打开全屏 HDR 测试</string>
+    <string name="test_open_fullscreen_summary">独立窗口，只对样图提亮——HDR 模式不会泄漏到 App 其他界面。</string>
+    <string name="test_gainmap">gainmap 解码</string>
+    <string name="test_scan_running">扫描中: %1$s,请勿锁屏</string>
+    <string name="test_scan_summary">缓变 30%→60%→100%,每档同时记录 App 通道读数与 root 真实状态,结果写入 /sdcard/Download/hdrscan.log(约 30 秒,期间勿锁屏,HDR 开关保持打开)</string>
+    <string name="test_scan">一键 HDR 亮度扫描</string>
+    <string name="test_types">支持的 HDR 类型</string>
+    <string name="test_highest">峰值 HDR/SDR 比率</string>
+    <string name="test_luminance">期望峰值亮度</string>
+
+    <string name="about_version">版本</string>
+    <string name="about_license">许可证：Apache-2.0</string>
+    <string name="about_device">目标机型：联想小新 Pad Pro GT TB710FU（SM8650），ZUXOS 1.5.04.366 / Android 16</string>
+    <string name="about_disclaimer">需要 root 与 Xposed 框架，风险自担。本模块不写入任何亮度/背光路径。</string>
+
+    <string name="confirm_disable_message">UltraHDR 提亮将立即停止并回到出厂的 NaN 行为，可随时重新启用，免重启。</string>
+    <string name="disable_armed_toast">再次点击确认停用</string>
+
+    <string name="eula_title">用户协议与免责声明</string>
+    <string name="eula_scroll_hint">请完整阅读协议，滚动到底部后按钮才会解锁。</string>
+    <string name="eula_agree">同意并继续</string>
+    <string name="eula_decline">拒绝</string>
+</resources>
