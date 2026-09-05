@@ -102,7 +102,6 @@ HDR 视频为什么一直正常?视频走的是另一条通道(YUV 10bit + HLG �
 先查 prop:`adb shell getprop debug.sf.fp16_client_target`,应当输出 `true`。不是的话说明 KSU 模块没生效:没刷入、被禁用、或刷完没重启。这个 prop 重启即丢,靠模块的 system.prop 每次开机补上,不要指望手动 setprop 一劳永逸。
 
 **比率数值不动,或者某些 App 读不到?**
-打开 App"日志"页看模块日志:有 `INSTALL ... OK` 和 `RATIO` / `AppRead` 行在刷,模块就是活的。酷安读不到值是酷安自己进程内检测严格,显示本身不受影响;判断显示是否正常,以状态页的 dumpsys 数值和测试页样图为准。
 
 **照片还是不提亮?**
 按顺序查:LSPosed 作用域是否勾了系统框架和本应用;装完是否重启过;开关页的总闸是否被打开。
@@ -125,7 +124,6 @@ KSU 管理器删除 fp16 模块,LSPosed 停用本模块,重启。两个组件都
 
 ## 已知限制
 
-- 酷安读不到 ratio 值(它进程内检测严格)。显示本身正常,系统链路和多数 App 不受影响。
 - 高亮度段(约 480nits 以上)高光比厂商标称保守约 6%:钳制用的是 EDID/HWC 实测的物理峰值 750nits,而软件标称 800。宁可欠一点,不过曝。
 - GPU 合成默认开。fp16 修复落地后闪屏是否复发还缺长期观察;确认不闪可以关掉省点电,重启生效。
 - HDR 视频和照片同屏时,视频的色彩模式会接管全屏,有轻微偏色。与 ratio 无关,不处理。
@@ -133,23 +131,10 @@ KSU 管理器删除 fp16 模块,LSPosed 停用本模块,重启。两个组件都
 
 ## 证据与排查记录
 
-整个排查过程留了完整记录,都在仓库里。想复核机制的话,建议按这个顺序读:
+排查过程的完整档案都在仓库里,入口只有两个,不散:
 
-- `SF源码排查-20260905.md` — SF 二进制反汇编:fp16 flag 的消费点,和 false 时恒返 1.0 的路径
-- `KSU撬动fp16可行性-20260905.md` — prop 覆盖通道的源码依据与开机时序
-- `fp16prop独立验证-20260905.md` — 独立验证报告(其保守结论被实机推翻,留档存照)
-- `设备诊断-20260905*/` — 四轮实机 dumpsys/日志采样,含 HDR 视频对照
-- `v2.0.10终审-模块.md` / `v2.0.10终审-App.md` — 发版前的两路独立终审
-- `v2.0.7审查报告.md` / `v2.0.9审查报告.md` — 过程审查与可重跑的断言复核脚本
-- `sdcard日志方案调研.md` — 为什么 system_server 写不了 sdcard,只能由 App 用 root 镜像
+- **`docs/开发档案.md`** — 一份完整的主文档:机制定案(为什么坏/怎么修)、**全部踩坑实录**(机制/代码/流程三类坑,每条都有教训)、关键数字速查、版本弯路简表、诊断命令速查。想接手维护或移植到别的机型,先读它。
+- **`docs/反编译证据/`** — 联想 331/354/366 三个固件的关键 smali(带行号证据)、机制推理笔记全文、解包对比报告、vendor displayconfig。每个文件证明什么,见该目录的 README 索引表。
 
-## 致谢与参考
+效果终态(2026-09-05 实测):UltraHDR 正确提亮、高光有渐变、无过曝、无闪屏、渐进过渡与 A15 一致;酷安 HDR 检测通过并汇报正确比率,growhdr/系统测试页一致。
 
-- [LSPosed](https://github.com/LSPosed/LSPosed)、[libultrahdr](https://github.com/google/libultrahdr)
-- [AOSP: Mixed SDR and HDR composition](https://source.android.com/docs/core/display/mixed-sdr-hdr) / [Tone mapping HDR luminance](https://source.android.com/docs/core/display/tone-mapping) / [Display Ultra HDR images](https://developer.android.com/media/grow/ultrahdr/display)
-- 内置测试样图来自 [android/platform-samples](https://github.com/android/platform-samples)(Apache-2.0)
-- 界面基于 [Miuix](https://github.com/YuKongA/Miuix)(Apache-2.0)
-
-## License
-
-Apache-2.0,见 [LICENSE](LICENSE)。仅供学习交流,请只在自己合法拥有的设备上使用;root / Xposed 可能导致失去保修、变砖或数据丢失,后果自负。

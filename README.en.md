@@ -104,7 +104,6 @@ Note: `ksu-module/` in this repo (the displayconfig overlay) is an early experim
 Check the property first: `adb shell getprop debug.sf.fp16_client_target` should print `true`. If not, the KSU module isn't taking effect — not flashed, disabled, or no reboot after flashing. The property is lost on every reboot; the module's `system.prop` re-applies it at each boot, so don't rely on a one-time manual `setprop`.
 
 **The ratio won't move, or some apps can't read it?**
-Open the Logs page and look for `INSTALL ... OK` plus fresh `RATIO` / `AppRead` lines — if they're there, the module is alive. Coolapk in particular can't read the value because of its own strict in-process detection; the display itself is unaffected. Judge the display by the Status page's dumpsys value and the sample images, not by Coolapk.
 
 **Photos still don't boost?**
 In order: LSPosed scopes (system framework + this app); did you reboot after installing; is the master switch in Controls turned on by accident.
@@ -127,31 +126,17 @@ Delete the fp16 module in your KSU manager and disable this module in LSPosed, t
 
 ## Known limitations
 
-- Coolapk can't read the ratio value (strict in-process detection on their side). Display itself is fine, and the system chain plus most apps are unaffected.
 - In the high-brightness range (roughly above 480 nits) highlights run about 6% more conservative than the vendor's nominal figure: the clamp uses the EDID/HWC-measured physical peak of 750 nits while the software claims 800. Undershooting beats clipping.
 - GPU composition is on by default. Whether flicker can still recur after the fp16 fix needs longer observation; if you never see it, turning the switch off saves a little power (reboot to apply).
 - When HDR video and a photo share the screen, the video's color mode takes over the whole display with a slight tint. Unrelated to the ratio; not addressed.
 - Verified only on TB710FU + ZUXOS 1.5.04.366. Other devices have different curves, panel peaks and HWC behavior — the ratio logic may transfer, but nothing is guaranteed.
 
-## Evidence and investigation notes
+## Evidence & Records
 
-The whole investigation left a paper trail, all in this repo. If you want to verify the mechanism, read in this order:
+Everything lives in two places, not scattered:
 
-- `SF源码排查-20260905.md` — SF binary disassembly: the fp16 flag's consumer and the constant-1.0 path when false
-- `KSU撬动fp16可行性-20260905.md` — source-level basis for the property override channel and boot timing
-- `fp16prop独立验证-20260905.md` — the independent verification report (its cautious "probably won't work" was disproven on real hardware; kept for the record)
-- `设备诊断-20260905*/` — four rounds of on-device dumpsys/log sampling, including the HDR video comparison
-- `v2.0.10终审-模块.md` / `v2.0.10终审-App.md` — dual independent pre-release reviews
-- `v2.0.7审查报告.md` / `v2.0.9审查报告.md` — process reviews with re-runnable assertion scripts
-- `sdcard日志方案调研.md` — why system_server can't write to sdcard, and why the app mirrors logs via root instead
+- **`docs/开发档案.md`** — the full development archive: final mechanism analysis, a complete catalogue of every pitfall we hit (mechanism / code / process, each with its lesson), key numbers, the version history of dead ends, and diagnostic commands. Read this first if you want to maintain or port the fix.
+- **`docs/反编译证据/`** — key smali files from the Lenovo 331/354/366 firmwares (with line-number evidence), the full reasoning notes, the unpack diff reports, and the vendor displayconfig. See its README for a per-file evidence index.
 
-## Credits and references
+End state (verified 2026-09-05): UltraHDR images brighten correctly with gradual highlights, no overexposure, no flicker, A15-like smooth transitions; the Coolapk app now passes its HDR check and reports the correct ratio.
 
-- [LSPosed](https://github.com/LSPosed/LSPosed), [libultrahdr](https://github.com/google/libultrahdr)
-- [AOSP: Mixed SDR and HDR composition](https://source.android.com/docs/core/display/mixed-sdr-hdr) / [Tone mapping HDR luminance](https://source.android.com/docs/core/display/tone-mapping) / [Display Ultra HDR images](https://developer.android.com/media/grow/ultrahdr/display)
-- Bundled sample images from [android/platform-samples](https://github.com/android/platform-samples) (Apache-2.0)
-- UI built on [Miuix](https://github.com/YuKongA/Miuix) (Apache-2.0)
-
-## License
-
-Apache-2.0, see [LICENSE](LICENSE). For learning and research only; use on devices you lawfully own. Rooting and Xposed may void your warranty, brick your device or lose your data — you're on your own.
